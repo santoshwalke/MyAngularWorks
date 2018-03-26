@@ -1,0 +1,30 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<app-headers></app-headers>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+     <!--  <app-recipes *ngIf="loadFeature === 'recipes'"></app-recipes>
+      <app-shopping-list *ngIf="loadFeature !== 'recipes'"></app-shopping-list> -->
+      <router-outlet></router-outlet>
+    </div>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Directive</h1>
+			<p appBasicHighlight>
+				Hello Santosh
+			</p>
+			<!-- <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'">
+				appBetterHighlight
+			</p> -->
+			<p appBetterHighlight defaultColor="yellow" highlightColor="red">
+				appBetterHighlight
+			</p>
+			<!-- <p [appBetterHighlight]="'yellow'"  defaultColor="red">
+				appBetterHighlight
+			</p> -->
+		</div>
+	</div>
+</div>
