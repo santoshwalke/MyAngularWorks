@@ -1,0 +1,229 @@
+<h1>Reactive</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="signupForm" (ngSubmit)="onReactiveSubmit()">
+                <div formGroupName="userData">
+                    <div class="form-group">
+                        <label for="idUserName">
+                            UserName
+                        </label>
+                        <input
+                        id="idUserName" 
+                        class="form-control"
+                        type="text" 
+                        formControlName="txtUserName">
+                         <p 
+                         class="help-block" 
+                         *ngIf="!signupForm.get('userData.txtUserName').valid && signupForm.get('userData.txtUserName').touched">
+                          <span
+                          *ngIf="signupForm.get('userData.txtUserName').errors['nameIsFirbidden']">
+                              This name is invalid
+                          </span>
+                          <span *ngIf="signupForm.get('userData.txtUserName').errors['required']">
+                                Please enter User Name !!
+                          </span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="idEmail">
+                            Email
+                        </label>
+                        <input 
+                        class="form-control"
+                        type="text" 
+                        formControlName="txtEmail">
+                         <p class="help-block" *ngIf="!signupForm.get('userData.txtEmail').valid && signupForm.get('userData.txtEmail').touched">
+                          Please enter Email !!
+                        </p>
+                    </div>
+                </div>
+                <div *ngFor="let gender of genders">
+                   <label>
+                    <input 
+                    type="radio" 
+                    formControlName="gender1"
+                    [value]="gender">
+                    {{gender}} 
+                   </label>
+                </div>
+                <div formArrayName="hobbies">
+                    <h4>
+                        Your Hobbie
+                    </h4>
+                    <button 
+                    class="btn btn-default" 
+                    type="button"
+                    (click)="onAddHobbie()">
+                        Add Hobbie
+                    </button>
+                    <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies').controls;let i = index">
+                        <input type="text" class="form-control" [formControlName]="i">
+                    </div>
+                </div>
+                 <p class="help-block" *ngIf="!signupForm.valid && signupForm.touched">
+                      Please enter Valid Data !!
+                    </p>
+                <button 
+                type="submit"
+                class="btn btn-primary">
+                Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<h1>Template Driven</h1>
+<hr>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form (ngSubmit)="onSubmit()" #f=ngForm>
+        <div 
+        id="user-data" 
+        ngModelGroup="userData"
+        #userData = ngModelGroup>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+            type="text" 
+            id="username" 
+            class="form-control"
+            ngModel
+            name="txtuserName"
+            required 
+            >
+          </div>
+          <button class="btn btn-default" type="button" (click)="suggestUserName()">Suggest an Username</button>
+          <div class="form-group">
+            <label for="email">Mail</label>
+            <input 
+            type="email" 
+            id="email" 
+            class="form-control"
+            ngModel
+            name="txtemail"
+            required
+            email
+            #email = "ngModel"
+            >
+            <p class="help-block" *ngIf="!email.valid && email.touched">
+              Please enter void email !!
+            </p>
+          </div>
+        </div>
+        <p *ngIf="!userData.valid && userData.touched"> All Data Required !!!</p>
+        <div class="form-group">
+          <label for="secret">Secret Questions</label>
+          <select 
+          id="secret" 
+          class="form-control" 
+          [ngModel] = "'pet'" 
+          name="secretQustion">
+            <option value="pet">Your first Pet?</option>
+            <option value="teacher">Your first teacher?</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea 
+          rows="3" 
+          class="form-control" 
+          [(ngModel)]="deQuestionsAns"
+          name="QuestionsAns">            
+          </textarea>
+          <p>{{deQuestionsAns}}</p>
+        </div>
+        <div *ngFor="let gender of genders">
+          <label>
+            <input 
+            type="radio" 
+            name="gender" 
+            ngModel
+            [value]="gender"
+            required>
+            {{gender}}
+          </label>
+        </div>
+        <button [disabled]="!f.valid" class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngIf="showData"> 
+      <div class="col-md-12">
+        <h3>Your Data</h3>
+        <p>User Name : {{user.txtuserName}}</p>
+        <p>Email : {{user.txtemail}}</p>
+        <p>Secret Qustion : {{user.secretQustion}}</p>
+        <p>Questions Ans : {{user.QuestionsAns}}</p>
+        <p>Gender : {{user.gender}}</p>
+      </div>
+  </div>
+</div>
+<hr>
+<h1>Assignment</h1>
+<div class="container">
+  <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form #AssiF=ngForm (ngSubmit)="AssFormSubmit()">
+                <div class="form-group">
+                    <label for="idEmail">
+                         Email
+                    </label>
+                    <input id = "idEmail"
+                    class="form-control" 
+                    type="text" 
+                    name="txtEmail1"
+                    ngModel
+                    email
+                    required
+                    #email="ngModel">
+                    <p *ngIf="!email.valid && email.touched">
+                        Email Should be Valid !!!
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="idDropDownSubscription">
+                        Subscriptions
+                    </label>
+                    <select 
+                    class="form-control"
+                    id="idDropDownSubscription"
+                    name="dropDownSUbscription"
+                    ngModel
+                    [ngModel]="'Basic'"
+                    >
+                        <option value="Basic">
+                            Basic
+                        </option>
+                        <option value="Advance">
+                            Advance
+                        </option>
+                        <option value="Pro">
+                            Pro
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="idPass">
+                        Password
+                    </label>
+                    <input 
+                    type="password"
+                    class="form-control" 
+                    name="txtPassword"
+                    required
+                    ngModel
+                    #password = "ngModel">
+                    <p *ngIf="!password.valid && password.touched">
+                        Password Required !!!
+                    </p>
+                </div>
+                <button 
+                type="submit"
+                class="btn btn-primary">
+                    Submit Button
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
