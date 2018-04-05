@@ -16,6 +16,7 @@ export class RecipeDetailsComponent implements OnInit {
     private recipeService : RecipeService,
     private route : ActivatedRoute,
     private router : Router) { }
+
   ngOnInit() {
     this.route.params.
     subscribe(
@@ -31,6 +32,10 @@ export class RecipeDetailsComponent implements OnInit {
   onEditNavigate() {
     this.router.navigate(['edit'], {relativeTo : this.route});
     // this.router.navigate(['../', this.id, 'edit'], {relativeTo : this.route});
+  }
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipes(this.id);
+    this.router.navigate(['/recipes']);
   }
 
 }

@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component ({
 	selector : 'app-recipe-list',
@@ -11,8 +12,9 @@ import { RecipeService } from '../recipe.service';
 	styleUrls : ['./recipe-list.component.css']
 })
 
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
 	@Output() recipeWasSelected = new Subject<Recipe>();
+  subscription : Subscription;
 // recipes : Recipe[] = [
 // 	new Recipe ('chicken biryani', 'Recipes1 description', 'https://i0.wp.com/media.hungryforever.com/wp-content/uploads/2017/06/09121657/chicken-fry-biryani-recipes.jpg?w=1269&strip=all&quality=80'),
 // 	new Recipe ('Mutton Beliram', 'Recipes2 description', 'https://i.ndtvimg.com/i/2017-10/mutton-recipes_620x330_61508135398.jpg'),
@@ -25,6 +27,12 @@ constructor(
   private route : ActivatedRoute ) {}
 
   ngOnInit() {
+    this.subscription = this.recipeService.recipesChanged
+    .subscribe(
+      (recipes : Recipe[]) => {
+        this.recipes = recipes;
+      }
+    );
   	this.recipes = this.recipeService.getRecipes();
   }
   onRecipeSelected(recipe : Recipe) {
@@ -32,5 +40,8 @@ constructor(
   }
   newRecipe() {
     this.router.navigate(['new'], {relativeTo : this.route});
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
