@@ -61,4 +61,8 @@ deleteRecipes(index : number) {
 	this.recipes.splice(index, 1);
 	this.recipesChanged.next(this.recipes.slice());
 }
+setRecipe(recipes : Recipe[]) {
+	this.recipes = recipes;
+	this.recipesChanged.next(this.recipes.slice());
+}
 }
