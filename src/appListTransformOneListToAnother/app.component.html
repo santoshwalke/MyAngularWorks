@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div *ngFor="let a of arrA; let i= index">
+        <app-a 
+        [list]='a'
+        [index]='i'
+        (listClickA)= 'linkAClik(i, a)'></app-a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div *ngFor="let a of arrB; let i = index">
+        <app-b 
+        [list]='a'
+        [index]='i'
+        (listClickB)='linkBClick(i, a)'
+        ></app-b>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,11 @@
-import { 
-    HttpClient, 
-    HttpHeaders, 
-    HttpParams, 
-    HttpRequest 
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpParams,
+    HttpRequest
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
-import 'rxjs/Rx';
 
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
@@ -30,11 +29,11 @@ export class DataStorageService {
         params : new HttpParams().set('auth', token)
     });*/
     const req = new HttpRequest(
-        'PUT', 
+        'PUT',
         'https://myproject-efacd.firebaseio.com/recipes.json',
         this.recipeService.getRecipes(),
         {
-            reportProgress : true 
+            reportProgress : true
            /* params : new HttpParams().set('auth', token)*/
         });
     return this.httpClient.request(req);
@@ -46,13 +45,13 @@ export class DataStorageService {
     /*this.httpClient.get<Recipe[]>('https://myproject-efacd.firebaseio.com/recipes.json?auth=' + token)*/
     this.httpClient.get<Recipe[]>('https://myproject-efacd.firebaseio.com/recipes.json', {
       observe : 'body',
-      responseType : 'json' //defualt its JSON
+      responseType : 'json' // defualt its JSON
       /*params : new HttpParams().set('auth', token)*/
     })
       .map(
         (recipes) => {
         console.log(recipes);
-          for (let recipe of recipes) {
+          for (const recipe of recipes) {
             if (!recipe['ingredients']) {
               recipe['ingredients'] = [];
             }

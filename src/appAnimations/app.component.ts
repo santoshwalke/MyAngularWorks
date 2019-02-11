@@ -114,7 +114,7 @@ import {
   				color : 'red'
   			})),
   			animate(800, style({
-  				transform : 'translateX(100px)'
+  				transform : 'translateX(100px)',
   				opacity : 0
   			}))
   		])
